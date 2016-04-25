@@ -7,3 +7,5 @@ cmake_install.cmake
 install_manifest.txt
 extract_featuresNM*
 train_classifierNM*
+char_datasetNM*
+train_classifierNM*

@@ -15,8 +15,7 @@ for filename in os.listdir(traindbdir):
 
   else:
 		if (out != ''):
-			out = out.replace("\n","\nC,",out.count("\n")-1)
-			lines.append("C,"+out)
+			lines += ["C,"+o for o in out.split('\n')]
 
 
 
@@ -29,11 +28,9 @@ for filename in os.listdir(traindbdir):
 
   if ("Non-integer" in out):
 		print "ERROR: Non-integer Euler number"
-
   else:
 		if (out != ''):
-			out = out.replace("\n","\nN,",out.count("\n")-1)
-			lines.append("N,"+out)
+			lines += ["N,"+o for o in out.split('\n')]
 
 print "Total: %d " % len(lines)
 

@@ -12,9 +12,9 @@ int GroundTruth(Mat &_originalImage) {
 
     Mat originalImage(_originalImage.rows + 2, _originalImage.cols + 2, _originalImage.type());
     // make border with white color
-    copyMakeBorder(_originalImage, originalImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(255, 255, 255));
+    copyMakeBorder(_originalImage, originalImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0));
 
-    // white character with black backgound
+    // black character with white backgound
     Mat binaryImage(originalImage.size(), CV_8UC1);
 
     uchar thresholdValue = 100;
@@ -31,7 +31,7 @@ int GroundTruth(Mat &_originalImage) {
     int perimeter;
 
     // white character with black background
-    threshold(originalImage, binaryImage, thresholdValue, maxValue, THRESH_BINARY_INV);
+    threshold(originalImage, binaryImage, thresholdValue, maxValue, THRESH_BINARY);
 
     int regionsCount = 0;
     int totalPixelCount = binaryImage.rows * binaryImage.cols;
@@ -150,8 +150,7 @@ int main(int argc, char **argv) {
         exit(0);
     } else {
         originalImage = imread(argv[1], 0);
-        // black character with white backgound
-        originalImage = 255 - originalImage;
+        // originalImage = 255 - originalImage;
     }
 
     GroundTruth(originalImage);

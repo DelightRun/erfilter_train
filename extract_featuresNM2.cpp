@@ -13,7 +13,7 @@ using namespace std;
 int GroundTruth(Mat &_originalImage) {
 
     Mat originalImage(_originalImage.rows + 2, _originalImage.cols + 2, _originalImage.type());
-    copyMakeBorder(_originalImage, originalImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(255, 255, 255));
+    copyMakeBorder(_originalImage, originalImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0));
 
     Mat binaryImage(originalImage.size(), CV_8UC1);
 
@@ -30,7 +30,7 @@ int GroundTruth(Mat &_originalImage) {
     int di, rx, ry;
     int perimeter;
 
-    threshold(originalImage, binaryImage, thresholdValue, maxValue, THRESH_BINARY_INV);
+    threshold(originalImage, binaryImage, thresholdValue, maxValue, THRESH_BINARY);
 
     int regionsCount = 0;
     int totalPixelCount = binaryImage.rows * binaryImage.cols;
@@ -132,7 +132,7 @@ int GroundTruth(Mat &_originalImage) {
                 rect.height += 2;
                 region = region(rect);
 
-                vector<vector<Point>> contours;
+                vector<vector<Point> > contours;
                 vector<Point> contour_poly;
                 vector<Vec4i> hierarchy;
                 findContours(region, contours, hierarchy, RETR_TREE, CHAIN_APPROX_NONE, Point(0, 0));
@@ -200,7 +200,6 @@ int main(int argc, char **argv) {
         exit(0);
     } else {
         originalImage = imread(argv[1], 0);
-        originalImage = 255 - originalImage;
     }
 
     GroundTruth(originalImage);

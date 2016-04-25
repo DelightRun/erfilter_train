@@ -5,7 +5,11 @@ CMakeScripts
 Makefile
 cmake_install.cmake
 install_manifest.txt
-extract_featuresNM*
-train_classifierNM*
-char_datasetNM*
-train_classifierNM*
+extract_featuresNM1
+extract_featuresNM2
+train_classifierNM1
+train_classifierNM2
+char_datasetNM1.cvs
+char_datasetNM2.cvs
+trained_classifierNM1.xml
+trained_classifierNM2.xml

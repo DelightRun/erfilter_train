@@ -9,7 +9,7 @@ extract_featuresNM1
 extract_featuresNM2
 train_classifierNM1
 train_classifierNM2
-char_datasetNM1.cvs
-char_datasetNM2.cvs
+char_datasetNM1.csv
+char_datasetNM2.csv
 trained_classifierNM1.xml
 trained_classifierNM2.xml

@@ -17,22 +17,11 @@ int main(int argc, char **argv) {
     //Select 90% for the training
     cvml->setTrainTestSplitRatio(0.9, true);
 
-    Ptr<Boost> classifier;
+    Ptr<RTrees> classifier;
 
-    ifstream ifile("./trained_classifierNM1.xml");
-    if (ifile) {
-        //The file exists, so we don't want to train
-        printf("Found trained_classifierNM1.xml file, remove it if you want to retrain with new data ... \n");
-        classifier = StatModel::load<Boost>("./trained_classifierNM1.xml");
-    } else {
-        //Train with 100 weak classifiers
-        printf("Training ... \n");
-        classifier = Boost::create();
-        classifier->setBoostype(Boost::REAL);
-        classifier->setWeakCount(100);
-        classifier->setWeightTrimRate(0.0);
-        classifier->train(cvml);
-    }
+    printf("Training ... \n");
+    classifier = RTrees::create();
+    classifier->train(cvml);
 
     //Calculate the test and train errors
     Mat train_responses, test_responses;
@@ -40,22 +29,6 @@ int main(int argc, char **argv) {
     float fl2 = classifier->calcError(cvml, true, test_responses);
     printf("Error train %f \n", fl1);
     printf("Error test %f \n", fl2);
-
-    //Try a char
-    Mat sample = (Mat_<float>(1, 4) << 1.063830, 0.083372, 0.000000, 2.000000);
-    float prediction = classifier->predict(sample, noArray(), 0);
-    float votes = classifier->predict(sample, noArray(), DTrees::PREDICT_SUM | StatModel::RAW_OUTPUT);
-
-    printf("\n The char sample is predicted as: %f (with number of votes = %f)\n", prediction, votes);
-    printf(" Class probability (using Logistic Correction) is P(r|character) = %f\n", (float) 1 - (float) 1 / (1 + exp(-2 * votes)));
-
-    //Try a NONchar
-    Mat sample2 = (Mat_<float>(1, 4) << 2.000000, 0.235702, 0.000000, 2.000000);
-    prediction = classifier->predict(Mat(sample2), noArray(), 0);
-    votes = classifier->predict(Mat(sample2), noArray(), DTrees::PREDICT_SUM | StatModel::RAW_OUTPUT);
-
-    printf("\n The non_char sample is predicted as: %f (with number of votes = %f)\n", prediction, votes);
-    printf(" Class probability (using Logistic Correction) is P(r|character) = %f\n\n", (float) 1 - (float) 1 / (1 + exp(-2 * votes)));
 
     // Save the trained classifier
     classifier->save(string("./trained_classifierNM1.xml"));

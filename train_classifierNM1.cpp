@@ -25,9 +25,13 @@ int main(int argc, char **argv) {
         printf("Found trained_boost_char.xml file, remove it if you want to retrain with new data ... \n");
         boost = StatModel::load<Boost>("./trained_classifierNM1.xml");
     } else {
-        //Train with 100 features
+        //Train with 100 weak classifiers
         printf("Training ... \n");
-        boost = StatModel::train<Boost>(cvml, Boost::Params(Boost::REAL, 100, 0.0, 1, false, Mat()));
+        boost = Boost::create();
+        boost->setBoostType(Boost::REAL);
+        boost->setWeakCount(100);
+        boost->setWeightTrimRate(0.0);
+        boost->train(cvml);
     }
 
     //Calculate the test and train errors

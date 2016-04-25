@@ -1,38 +1,42 @@
 import os
 import subprocess
 
-f = open('char_datasetNM2.csv', 'w')
+lines = []
 
-#obtain positive samples 
+#obtain positive samples
 traindbdir = "./data/char/"
 
+print("processing "+traindbdir);
 for filename in os.listdir(traindbdir):
-  print("processing "+filename);
-	
   out = subprocess.check_output(["./extract_featuresNM2",traindbdir+filename])
-	
+
   if ("Non-integer" in out):
 		print "ERROR: Non-integer Euler number"
-	
+
   else:
 		if (out != ''):
 			out = out.replace("\n","\nC,",out.count("\n")-1)
-			f.write("C,"+out)
+			lines.append("C,"+out)
 
-#obtain negative samples 
-traindbdir = "./data/nochar/"
 
+
+#obtain negative samples
+traindbdir = "./data/nonchar/"
+
+print("processing "+traindbdir);
 for filename in os.listdir(traindbdir):
-  print("processing "+filename);
-	
   out = subprocess.check_output(["./extract_featuresNM2",traindbdir+filename])
-	
+
   if ("Non-integer" in out):
 		print "ERROR: Non-integer Euler number"
-	
+
   else:
 		if (out != ''):
 			out = out.replace("\n","\nN,",out.count("\n")-1)
-			f.write("N,"+out)
+			lines.append("N,"+out)
 
-f.close()
+print "Total: %d " % len(lines)
+
+with open('char_datasetNM2.csv', 'w') as f:
+  f.writelines(lines)
+

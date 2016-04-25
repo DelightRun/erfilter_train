@@ -27,7 +27,11 @@ int main(int argc, char **argv) {
     } else {
         //Train with 100 features
         printf("Training ... \n");
-        boost = StatModel::train<Boost>(cvml, Boost::Params(Boost::REAL, 100, 0.0, 1, false, Mat()));
+        boost = Boost::create();
+        boost->setBoostType(Boost::REAL);
+        boost->setWeakCount(100);
+        boost->setWeightTrimRate(0.0);
+        boost->train(cvml);
     }
 
     //Calculate the test and train errors

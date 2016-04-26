@@ -1,20 +1,13 @@
-cmake_minimum_required(VERSION 2.8)
-project(opencv_sandbox)
+cmake_minimum_required(VERSION 3.5)
+project(erfilter_train)
 
-# Select a default build configuration if none was chosen
-IF(NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
-ENDIF()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-ADD_EXECUTABLE(extract_featuresNM1 ./extract_featuresNM1.cpp)
-ADD_EXECUTABLE(extract_featuresNM2 ./extract_featuresNM2.cpp)
-ADD_EXECUTABLE(train_classifierNM1 ./train_classifierNM1.cpp)
-ADD_EXECUTABLE(train_classifierNM2 ./train_classifierNM2.cpp)
+find_package(OpenCV REQUIRED)
+find_package(Boost COMPONENTS REQUIRED filesystem system)
 
-FIND_PACKAGE(OpenCV 3 REQUIRED)
-IF(OpenCV_FOUND)
-  TARGET_LINK_LIBRARIES(extract_featuresNM1 ${OpenCV_LIBS})
-  TARGET_LINK_LIBRARIES(extract_featuresNM2 ${OpenCV_LIBS})
-  TARGET_LINK_LIBRARIES(train_classifierNM1 ${OpenCV_LIBS})
-  TARGET_LINK_LIBRARIES(train_classifierNM2 ${OpenCV_LIBS})
-ENDIF()
+add_executable(extract_features extract_features.cpp)
+add_executable(train_classifiers train_classifiers.cpp)
+
+target_link_libraries(extract_features ${OpenCV_LIBS} ${Boost_LIBRARIES})
+target_link_libraries(train_classifiers ${OpenCV_LIBS})

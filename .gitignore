@@ -1,15 +1,13 @@
-build/
+### CMake template
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Makefile
 cmake_install.cmake
 install_manifest.txt
-extract_featuresNM1
-extract_featuresNM2
-train_classifierNM1
-train_classifierNM2
-char_datasetNM1.csv
-char_datasetNM2.csv
-trained_classifierNM1.xml
-trained_classifierNM2.xml
+
+
+data/
+origin_data/
+trained_classifiers/
+training_data/

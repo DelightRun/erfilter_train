@@ -150,7 +150,7 @@ vector<Feature> extract_features(Mat &_originalImage) {
             sort(m_crossings.begin(), m_crossings.end());
 
             //Features used in the second stage classifier
-            if ((rectFilled.width >= 5) && (rectFilled.height >= 5)) // TODO find a better way to select good negative examples
+            if (rectFilled.height >= binaryImage.rows*0.75)
             {
                 Mat region = Mat::zeros(binaryImage.rows + 2, binaryImage.cols + 2, CV_8UC1);
                 int newMaskVal = 255;

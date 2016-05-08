@@ -92,8 +92,8 @@ vector<Feature> extract_features(Mat &_originalImage) {
                 crossings[j] = 0;
             }
 
-            for (ry = rectFilled.y; ry < rectFilled.y + rectFilled.height; ry++) {
-                for (rx = rectFilled.x; rx < rectFilled.x + rectFilled.width; rx++) {
+            for (ry = rectFilled.y - 1; ry < rectFilled.y + rectFilled.height; ry++) {
+                for (rx = rectFilled.x - 1; rx < rectFilled.x + rectFilled.width; rx++) {
                     if ((binaryImage.at<uint8_t>(ry, rx - 1) != binaryImage.at<uint8_t>(ry, rx)) && (binaryImage.at<uint8_t>(ry, rx - 1) + binaryImage.at<uint8_t>(ry, rx) == middleValue + zeroValue)) {
                         crossings[ry - rectFilled.y]++;
                     }
